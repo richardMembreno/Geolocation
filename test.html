@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Test</h1>
+    <p id="demo"></p>
+
+</body>
+<script>  
+
+var options = {
+    enableHighAccuracy: true,
+    maximumAge: 0
+  };
+
+  setInterval(getPosition, 10000);
+
+function getPosition(){
+    navigator.geolocation.getCurrentPosition(success, error, options);
+}
+
+function success(position) {
+  var coordenadas = position.coords;
+  var date = new Date();
+    var currentTime = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+  console.log('posición actual es:' + coordenadas.latitude + " " + coordenadas.longitude + " " +  currentTime);
+};
+
+function error(error) {
+  console.warn('ERROR(' + error.code + '): ' + error.message);
+};
+
+function handlePermission(){
+  navigator.permissions.query({name: "geolocation"}).then((result) => {
+    if(result.state === "granted"){
+      console.log("Estado "+ result.state);
+    }else if(result.state === "prompt"){
+      console.log("Estado "+ result.state);
+      setInterval(getPosition, 10000);
+    }
+  });
+}
+
+
+</script>
+</html>
